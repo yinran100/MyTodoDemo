@@ -10,13 +10,13 @@ let saveToLocalSrorage = (key, item) => {
     } catch (error) {}
 };
 const mutations = {
-    setProvinceId(state, item) {
-        state.provinceId = item;
-    }
+    saveToken(state, item) {
+        state.token = item;
+        saveToLocalSrorage("token", item);
+    },
 };
 
-const getters = {
-};
+const getters = {};
 
 export default new Vuex.Store({
     getters,

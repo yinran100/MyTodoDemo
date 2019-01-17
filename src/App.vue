@@ -26,7 +26,7 @@ export default {
 };
 </script>
 
-<style lang='stylus'  scoped>
+<style lang='stylus'  >
 
 .page-body
   position: absolute

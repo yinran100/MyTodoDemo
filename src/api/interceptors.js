@@ -1,6 +1,4 @@
 import Axios from 'axios'
-import router from '@/router'
-import Store from '@/store/store'
 import {
     getState
 } from "@/api/api"
@@ -8,8 +6,9 @@ import {
     MessageBox,
     Message
 } from 'element-ui'
+const postUrl = "todo.lanternfish.ai" //https://todo.lanternfish.ai
 const Request = Axios.create({
-    baseURL: `https://${Store.state.systemInfo.postUrl}`
+    baseURL: `https://${postUrl}`
 });
 // 拦截request,设置全局请求为ajax请求 
 Request.interceptors.request.use(config => {
@@ -36,18 +35,6 @@ Request.interceptors.response.use(response => {
             // loadpage.close();
             break
             // 需要重新登录
-        case 105:
-            router.replace({
-                path: '/login',
-                query: {
-                    redirect: router.currentRoute.fullPath
-                }
-            })
-            Store.commit("saveToken", "");
-            Store.commit("saveUserMsg");
-            Store.commit("saveLogin", 0);
-            data.description = data.message
-            break
         case 206: //页面停留时间太长
             Message.warning({
                 message: data.message,
