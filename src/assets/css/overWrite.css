@@ -1,0 +1,19 @@
+﻿
+/* 阻止代码闪现问题 */
+[v-cloak] {
+	display: none;
+}
+
+.clearfix:after {
+	content: "020";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
