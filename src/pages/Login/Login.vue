@@ -48,13 +48,13 @@ export default {
     //用户名的校验规则
     let validateUserName = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error("用户名不能为空"));
+        callback(new Error("The user name cannot be empty"));
       } else callback();
     };
     //密码的校验规则
     let validatePassWord = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error("密码不能为空"));
+        callback(new Error("The password cannot be empty"));
       } else callback();
     };
     return {
