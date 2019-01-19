@@ -85,11 +85,11 @@ export default {
           this.$store.commit("saveToken", res.token);
         },
         () => {
-          this.tip = "密码错误";
+          this.tip = "密码错误或没有注册";
+          this.showErrorMessage("密码错误或没有注册");
         }
       );
     },
-
     sign() {}
   }
 };
@@ -118,7 +118,6 @@ export default {
       padding: 15px 0
 
       .login-btn, .sign-btn
-        letter-spacing: 5px
         margin-right: 20px
 
       .tips
