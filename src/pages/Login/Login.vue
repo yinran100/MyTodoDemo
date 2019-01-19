@@ -1,38 +1,40 @@
 <template>
   <el-container direction="vertical"
-    @keyup.enter="enter('loginForm')">
+    @keyup.enter.native="enter('loginForm')">
     <el-card class="login-wrapper">
       <div slot="header">
-        <div class="login-head">登 录</div>
+        <div class="login-head">Login</div>
       </div>
       <el-form class="login-form"
         :model="loginForm"
         label-width="70px"
+        :rules="rules"
         ref="loginForm">
 
         <el-form-item prop="userName"
-          label="用户名"
-          :rules="rules.userName">
+          label="Username">
           <el-input v-model.trim="loginForm.userName"
             autofocus></el-input>
         </el-form-item>
 
         <el-form-item prop="password"
-          label="密码"
-          :rules="rules.password">
+          label="Password">
           <el-input type="password"
-            v-model.trim="loginForm.password" />
+            v-model="loginForm.password" />
         </el-form-item>
-
-        <el-form-item>
-          <el-button class="login-btn"
-            type="success"
-            @click="enter('loginForm')">登录</el-button>
-          <el-button class="sign-btn"
-            @click="sign">注册</el-button>
-        </el-form-item>
-        <p class="tips">{{tip}}</p>
       </el-form>
+
+      <div class="btn-wrap">
+        <el-button class="sign-btn"
+          type="text"
+          @click="sign">Sign up now</el-button>
+        <el-button class="login-btn"
+          type="success"
+          @click="enter('loginForm')">Login</el-button>
+
+      </div>
+
+      <p class="tips">{{tip}}</p>
 
     </el-card>
   </el-container>
@@ -82,15 +84,29 @@ export default {
         password: this.loginForm.password
       }).then(
         res => {
-          this.$store.commit("saveToken", res.token);
+          res = res.data;
+          if (res.token) {
+            this.$store.commit("saveToken", res.token);
+            this.$message({
+              message: "恭喜，登录成功！",
+              type: "success"
+            });
+            this.$router.push("/home");
+          } else {
+            this.showErrorMessage("登录失败，请重试");
+            console.log(res);
+          }
         },
-        () => {
-          this.tip = "密码错误或没有注册";
-          this.showErrorMessage("密码错误或没有注册");
+        err => {
+          let res = err.response.data;
+          this.tip = res.message;
+          this.showErrorMessage(this.tip);
         }
       );
     },
-    sign() {}
+    sign() {
+      this.$router.push("/sign");
+    }
   }
 };
 </script>
@@ -108,21 +124,22 @@ export default {
     padding: 5px 30px
     position: relative
     margin: 150px auto 0
+    min-width: 385px
 
     .login-head
       font-size: 22px
       text-align: center
 
-    .login-form
-      background-color: #fff
-      padding: 15px 0
+    .btn-wrap
+      margin-left: 70px
+      margin-bottom: 10px
 
-      .login-btn, .sign-btn
-        margin-right: 20px
+      .login-btn
+        float: right
 
-      .tips
-        color: #f56c6c
-        font-size: 12px
-        line-height: 1
-        text-align: center
+    .tips
+      color: #f56c6c
+      font-size: 12px
+      line-height: 1
+      text-align: center
 </style>

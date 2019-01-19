@@ -14,6 +14,10 @@ const mutations = {
         state.token = item;
         saveToLocalSrorage("token", item);
     },
+    saveUserInfo(state, item) {
+        state.userInfo = item;
+        saveToLocalSrorage("userInfo", item);
+    },
 };
 
 const getters = {};
