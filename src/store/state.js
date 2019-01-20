@@ -15,6 +15,5 @@ try {
 
 export default {
     token,
-    loginTime,
     userInfo
 };
