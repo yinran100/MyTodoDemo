@@ -141,7 +141,6 @@ export default {
     modify(title) {
       modifyTodo(this.modifyTodoItem.id, { title }).then(
         data => {
-          console.log(data);
           this.dialogVisible = false;
           this.todoList.splice(this.showDeleteIndex, 1, {
             id: this.modifyTodoItem.id,
@@ -192,6 +191,7 @@ export default {
 
   .todo-content
     flex: 1
+    color: #606266
     margin-right: 50px
 
   .edit-btn
