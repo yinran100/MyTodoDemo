@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '@/store/store'
-
+import {
+  Message
+} from 'element-ui'
 
 import Home from '@/pages/Home/Home'
 import Login from '@/pages/Login/Login'
@@ -45,15 +47,30 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-    if (Store.state.token && Store.state.token == 0) {
-      next({
+    if (Store.state.token.length == 0) {
+      Message({
+        message: "Please log in!",
+        type: "warning"
+      });
+      return next({
         path: '/login',
         query: {
           redirect: to.fullPath
         } // 将跳转的路由path作为参数，登录成功后跳转到该路由
       })
-    } else next();
+    } else {
+      next();
+    }
   } else {
+    if (to.path == '/login' && Store.state.token.length != 0) {
+      Message({
+        message: "You have logged in successfully!",
+        type: "success"
+      });
+      return next({
+        path: '/home'
+      })
+    }
     next();
   }
 })

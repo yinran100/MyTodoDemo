@@ -34,7 +34,7 @@ Request.interceptors.response.use(res => {
             center: true,
             type: "warning"
         })
-        // 401 说明 token 验证失败
+        // 401  说明 token 验证失败 403
         // 可以直接跳转到登录页面，重新登录获取 token
         Router.replace({
             path: '/login',
