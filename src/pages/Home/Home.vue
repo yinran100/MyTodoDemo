@@ -1,6 +1,7 @@
 <template>
   <el-row type="flex"
-    justify="space-around">
+    justify="space-around"
+    @click.native.self="showDeleteIndex=-1">
     <el-col :sm="24"
       :md="20"
       :lg="16">
@@ -19,6 +20,8 @@
               type="text"
               @click="dialogVisible=true">add todo</el-button>
           </div>
+          <p class="tip"
+            v-show="todoList.length==0">Currently there is no any todo</p>
           <transition-group tag="div"
             name="el-zoom-in-top">
             <div class="todo-item"
@@ -28,11 +31,11 @@
               <div class="todo-content">{{item.title}}</div>
 
               <div class="edit-btn"
-                v-show="showDeleteIndex==index"
+                v-show="showDeleteIndex===index"
                 @click="showEdit(index)"><i class="el-icon-edit"></i></div>
 
               <div class="delete-btn"
-                v-show="showDeleteIndex==index"
+                v-show="showDeleteIndex===index"
                 @click="confirm(index)"><i class="el-icon-delete"></i></div>
 
             </div>
@@ -63,7 +66,7 @@ export default {
     return {
       loading: true,
       dialogVisible: false,
-      showDeleteIndex: null,
+      showDeleteIndex: -1,
       modifyTodoItem: null,
       todoList: []
     };
@@ -171,6 +174,10 @@ export default {
   .el-card
     padding: 20px 30px
     margin: 15px 0
+
+.tip
+  color: #909399
+  font-size: 14px
 
 .todo-item
   padding: 20px
