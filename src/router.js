@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Store from '@/store/store'
 
 
 import Home from '@/pages/Home/Home'
@@ -9,10 +10,9 @@ import Sign from '@/pages/Sign/Sign'
 Vue.use(Router)
 
 const router = new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
-     redirect:'/home'
+      redirect: '/home'
     },
     {
       path: '/home',
@@ -37,12 +37,15 @@ const router = new Router({
       meta: {
         requireAuth: false // 进入这个路由是否需要登录
       }
+    }, {
+      path: '*',
+      redirect: "/",
     }
   ]
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-    if (localStorage.token == "") {
+    if (Store.state.token && Store.state.token == 0) {
       next({
         path: '/login',
         query: {

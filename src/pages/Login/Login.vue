@@ -83,23 +83,21 @@ export default {
         username: this.loginForm.userName,
         password: this.loginForm.password
       }).then(
-        res => {
-          res = res.data;
-          if (res.token) {
-            this.$store.commit("saveToken", res.token);
+        data => {
+          if (data.token) {
+            this.$store.commit("saveToken", data.token);
             this.$message({
-              message: "恭喜，登录成功！",
+              message: "Congratulations, your login succeeded！",
               type: "success"
             });
             this.$router.push("/home");
           } else {
-            this.showErrorMessage("登录失败，请重试");
-            console.log(res);
+            this.showErrorMessage("login failure,please retry~");
+            console.log(data);
           }
         },
         err => {
-          let res = err.response.data;
-          this.tip = res.message;
+          this.tip = err.message;
           this.showErrorMessage(this.tip);
         }
       );

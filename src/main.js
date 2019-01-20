@@ -6,11 +6,11 @@ import ElementUI from 'element-ui'
 import '@/assets/css/reset.css'
 import '@/assets/css/overWrite.css'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import 'animate.css/animate.min.css' //动画效果
 
 Vue.use(ElementUI);
 
-Vue.prototype.showErrorMessage = message => {  //全局错误提示的方法
+Vue.prototype.showErrorMessage = message => { //全局错误提示的方法
     if (message) {
         ElementUI.Message({
             showClose: true,

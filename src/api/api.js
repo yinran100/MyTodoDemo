@@ -1,13 +1,13 @@
-import Axios from "axios";
+import httpRequest from "./httpInterceptor.js";
 
-const postUrl = "todo.lanternfish.ai" //todo.lanternfish.ai
+export const login = params => httpRequest.post("/auth", params); //登录
 
-const caizhanRequest = Axios.create({
-    baseURL: `https://${postUrl}`
-});
+export const sign = params => httpRequest.post("/user", params); //注册
 
-export const login = params => caizhanRequest.post("/auth", params); //登录
+export const getTodoList = params => httpRequest.get("/user/todo", params); //获取用户备忘录列表
 
-export const sign = params => caizhanRequest.post("/user", params); //注册
+export const addTodo = params => httpRequest.post("/todo", params); //添加备忘录
 
-export const getTodoList = params => caizhanRequest.get("/user/todo", params); //获取用户备忘录列表
+export const deleteTodo = params => httpRequest.delete("/todo/" + params); //删除备忘录
+
+export const modifyTodo = (params, content) => httpRequest.put("/todo/" + params, content); //修改备忘录

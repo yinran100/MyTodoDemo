@@ -108,9 +108,8 @@ export default {
         password: this.signForm.password1,
         name: "lanternyin"
       }).then(
-        res => {
-          res = res.data;
-          if (res.id || res.username) {
+        data => {
+          if (data.id || data.username) {
             this.$message({
               message: "registered successfully，please login！",
               type: "success"
@@ -118,12 +117,11 @@ export default {
             this.$router.push("/login");
           } else {
             this.showErrorMessage("fail to register，please retry~");
-            console.log(res);
+            console.log(data);
           }
         },
         err => {
-          let res = err.response.data;
-          this.tip = `fail to register，${res.message}`;
+          this.tip = `fail to register，${err.message}`;
           this.showErrorMessage(this.tip);
         }
       );

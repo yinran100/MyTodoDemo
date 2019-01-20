@@ -34,6 +34,7 @@ export default {
   left: 0
   right: 0
   bottom: 0
+  transition: all 0.3s ease
 
 .el-scrollbar
   height: 100%

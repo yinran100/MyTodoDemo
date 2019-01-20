@@ -8,7 +8,7 @@ let token = '',
 
 try {
     if (localStorage.token) token = JSON.parse(localStorage.token);
-    if (localStorage.userInfo) userId = JSON.parse(localStorage.userInfo);
+    if (localStorage.userInfo) userInfo = JSON.parse(localStorage.userInfo);
 } catch (error) {
     //
 }
