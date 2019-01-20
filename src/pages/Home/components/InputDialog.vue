@@ -1,7 +1,7 @@
 <template>
 
   <el-dialog class="input-wrapper"
-    :title="modifyContent.length==0?'Add Todo':'Modify Todo'"
+    :title="editModel?'Modify Todo':'Add Todo'"
     :visible="dialogVisible"
     @open='todoContent=modifyContent'
     @close="closeDialog"
@@ -16,7 +16,7 @@
       class="dialog-footer">
       <el-button @click="closeDialog">cancel</el-button>
       <el-button type="primary"
-        @click="commitTodo">commit</el-button>
+        @click="commitTodo">submit</el-button>
     </div>
   </el-dialog>
 </template>
@@ -40,6 +40,11 @@ export default {
       committing: false
     };
   },
+  computed: {
+    editModel() {
+      return this.modifyContent.length != 0;
+    }
+  },
   methods: {
     commitTodo() {
       if (this.committing) return;
@@ -51,16 +56,33 @@ export default {
         });
       else {
         this.committing = true;
-        this.$emit(
-          this.modifyContent.length == 0 ? "add" : "modify",
-          this.todoContent
-        );
+        this.$emit(this.editModel ? "modify" : "add", this.todoContent);
       }
     },
-    closeDialog() {
+    close() {
       this.todoContent = "";
       this.$emit("closeDialog");
       this.committing = false;
+    },
+    closeDialog() {
+      if (!this.editModel || this.modifyContent == this.todoContent)
+        return this.close();
+      this.$confirm(
+        "Your content will not be saved.",
+        "Are you sure you want to cancel the input?",
+        {
+          type: "warning",
+          cancelButtonText: "cancel",
+          confirmButtonText: "confirm"
+        }
+      ).then(
+        () => {
+          this.close();
+        },
+        () => {
+          return;
+        }
+      );
     }
   }
 };

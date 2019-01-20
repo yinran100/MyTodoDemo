@@ -104,7 +104,6 @@ export default {
       }).then(
         () => {
           this.$store.commit("saveToken", "");
-
           this.$router.push("/login");
         },
         () => {}
